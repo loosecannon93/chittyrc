@@ -1,7 +1,10 @@
 package main
 
-import "fmt"
+import(
+  "github.com/loosecannon93/chittyrc/lib/chilog"
+)
 
 func main() {
-	fmt.Println("Hello, 世界")
+  chilog.Init(chilog.INFO)
+  chilog.Log(chilog.WARNING, "wow such logging")
 }
