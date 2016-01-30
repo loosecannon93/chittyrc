@@ -6,7 +6,7 @@ bazel-*
 *~
 *.orig
 *.pyc
-/chirc
+/chittyrc
 .cache
 results
 report.html
