@@ -38,12 +38,12 @@ const (
 /* map levels to prefix strings */
 var prefixes = map[LogLevel]string{
 	QUIET:    "",
-	CRITICAL: "CRITICAL: ",
-	ERROR:    "ERROR: ",
-	WARNING:  "WARNING: ",
-	INFO:     "INFO: ",
-	DEBUG:    "DEBUG: ",
-	TRACE:    "TRACE: ",
+	CRITICAL: "CRITIC: ",
+	ERROR:    "ERROR : ",
+	WARNING:  "WARN  : ",
+	INFO:     "INFO  : ",
+	DEBUG:    "DEBUG : ",
+	TRACE:    "TRACE : ",
 }
 
 /* Actual Logger lobjects to log to.
@@ -82,5 +82,13 @@ func Init(level LogLevel) {
 	Trace = log.New(output(TRACE), prefixes[TRACE],
 		log.Ldate|log.Ltime|log.Lshortfile)
 
-	Info.Print("Initialized Logging system with level ", prefixes[level])
+	Info.Println("Initialized Logging system with level ", prefixes[level])
+	Info.Println("Will Print log Messages at the following levels:")
+	Critical.Println("Critical test")
+	Error.Println("Error test")
+	Warning.Println("Warning test")
+	Info.Println("Info test")
+	Debug.Println("Debug test")
+	Trace.Println("Trace test")
+	Info.Println("Use -v[v] to increase the logging level or -q to turn all off")
 }

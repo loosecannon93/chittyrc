@@ -40,6 +40,5 @@ func main() {
 	chilog.Info.Println("Server Starting")
 	chilog.Info.Print("Operator password is '", oper_password, "'")
 	chilog.Info.Println("port is", port)
-	chilog.Debug.Println("Debugging test")
 
 }
