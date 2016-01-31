@@ -3,6 +3,8 @@ package main
 import (
 	"flag"
 	"github.com/loosecannon93/chittyrc/lib/chilog"
+	"net"
+	"os"
 )
 
 func main() {
@@ -10,7 +12,7 @@ func main() {
 	// Parse Command line flags
 	var (
 		oper_password string
-		port          int
+		port          string
 		verbose       bool
 		vverbose      bool
 		quiet         bool
@@ -20,7 +22,7 @@ func main() {
 	flag.BoolVar(&verbose, "v", false, "Verbose: log upto DEBUG level")
 	flag.BoolVar(&vverbose, "vv", false, "Very Verbose: log everything including TRACE")
 	flag.BoolVar(&quiet, "q", false, "Print nothing to the log")
-	flag.IntVar(&port, "p", 6667, "Port to bind to")
+	flag.StringVar(&port, "p", "6667", "Port to bind to")
 
 	flag.Parse()
 
@@ -41,4 +43,17 @@ func main() {
 	chilog.Info.Print("Operator password is '", oper_password, "'")
 	chilog.Info.Println("port is", port)
 
+	socket, err := net.Listen("tcp", ":"+port)
+	if err != nil {
+		chilog.Critical.Fatalln("Server failed to bind to port ", port)
+	}
+	server := InitServer()
+	server.host, _ = os.Hostname()
+	for {
+		conn, err := socket.Accept()
+		if err != nil {
+			chilog.Critical.Fatalln("Failed to Accept() on socket")
+		}
+		go handleClient(server, conn)
+	}
 }
